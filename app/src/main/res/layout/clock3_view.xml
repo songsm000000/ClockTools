@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/alarmContent"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:layout_above="@+id/alarmTitle"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alarmTitle"
+        android:text="请设置闹钟时间："
+        android:textSize="30dp"
+        android:textColor="@color/gray"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alarmTime"
+        android:text="00:00"
+        android:textSize="40dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_toRightOf="@+id/alarmTitle"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cicleTitle"
+        android:text="请设置频次："
+        android:textSize="30dp"
+        android:textColor="@color/gray"
+        android:layout_below="@+id/alarmTime"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cicleGroup"
+        android:orientation="horizontal"
+        android:gravity="fill"
+        android:layout_toRightOf="@+id/cicleTitle"
+        android:layout_below="@+id/alarmTime">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/once"
+            android:button="@null"
+            android:text="一次"
+            android:textSize="30dp"
+            android:textColor="@color/btncolor"
+            android:gravity="center"
+            android:layout_weight="1"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/everyday"
+            android:button="@null"
+            android:text="每天"
+            android:textSize="30dp"
+            android:textColor="@color/btncolor"
+            android:gravity="center"
+            android:layout_weight="1"/>
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/setAlarmBtn"
+        android:text="  设置闹钟  "
+        android:textSize="30dp"
+        android:textColor="@color/btncolor"
+        android:background="@color/white"
+        android:layout_below="@+id/cicleGroup"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancelAlarmBtn"
+        android:text="  取消闹钟  "
+        android:textSize="30dp"
+        android:textColor="@color/btncolor"
+        android:background="@color/white"
+        android:layout_below="@+id/cicleGroup"
+        android:layout_toRightOf="@+id/setAlarmBtn"/>
+
+</RelativeLayout>

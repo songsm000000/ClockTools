@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/startCountBtn"
+        android:text="  计时开始  "
+        android:textSize="20dp"
+        android:textColor="@color/btncolor"
+        android:background="@color/white"
+        android:layout_toLeftOf="@+id/resetCountBtn"
+        android:layout_above="@+id/countTimeInput"
+        android:onClick="onClick"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resetCountBtn"
+        android:text="  重新计时  "
+        android:textSize="20dp"
+        android:textColor="@color/btncolor"
+        android:background="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/countTimeInput"
+        android:onClick="onClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/getCountBtn"
+        android:text="  取得计时  "
+        android:textSize="20dp"
+        android:textColor="@color/btncolor"
+        android:background="@color/white"
+        android:layout_toRightOf="@+id/resetCountBtn"
+        android:layout_above="@+id/countTimeInput"
+        android:onClick="onClick"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/countTimeInput"
+        android:text="00:00:00 0"
+        android:textSize="50dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/timeList"
+        android:textSize="20dp"
+        android:textColor="@color/gray"
+        android:singleLine="false"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/countTimeInput"/>
+
+</RelativeLayout>
