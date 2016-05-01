@@ -8,10 +8,15 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ssm.clocktools.R;
 
@@ -24,12 +29,23 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     private float lastDegree = 0;
     private String direction = "";
 
+    private Bitmap bitmap = null;
+
+    private ShowCompass showCompass = null;
+    private Timer runTimer = null;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.compass_view);
         init();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        runTimer.cancel();
+        super.onDestroy();
     }
 
     private void init() {
@@ -40,6 +56,10 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_UI);
 
+        showCompass = new ShowCompass();
+        runTimer = new Timer();
+        runTimer.schedule(new drawTask(), 0, 200);
+
     }
 
     @Override
@@ -48,8 +68,6 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
         if (Math.abs(lastDegree - event.values[0]) < 1) {
             return;
         }
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.compass);
 
         lastDegree = event.values[0];
 
@@ -92,16 +110,39 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
 
         directionTxt.setText("方向：" + direction);
 
-        Matrix matrix = new Matrix();
-        matrix.postScale(6, 6);
-        matrix.postRotate(Math.round(event.values[0])*(-1));
-        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        compassImg.setImageBitmap(bitmap);
-
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    private class ShowCompass extends Handler{
+
+        public ShowCompass() {
+            super();
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            compassImg.setImageBitmap(bitmap);
+            super.handleMessage(msg);
+        }
+    }
+
+    private class drawTask extends TimerTask {
+
+        @Override
+        public void run() {
+
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.compass);
+            Matrix matrix = new Matrix();
+            matrix.postRotate(Math.round(lastDegree)*(-1));
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+            showCompass.sendMessage(new Message());
+
+        }
     }
 }
