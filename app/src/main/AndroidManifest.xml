@@ -16,8 +16,11 @@
             </intent-filter>
         </activity>
         <activity android:name="ssm.clocktools.clockTool.ClockActivity" ></activity>
-        <activity android:name="ssm.clocktools.compassTool.CompassActivity" ></activity>
         <activity android:name="ssm.clocktools.clockTool.AlarmActivity" ></activity>
+        <activity android:name="ssm.clocktools.compassTool.CompassActivity" ></activity>
+        <activity android:name="ssm.clocktools.stepcntTool.StepCntActivity" ></activity>
+        <service android:name="ssm.clocktools.stepcntTool.StepCntService"></service>
     </application>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 </manifest>

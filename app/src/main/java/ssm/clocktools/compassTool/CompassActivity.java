@@ -45,6 +45,7 @@ public class CompassActivity extends AppCompatActivity implements SensorEventLis
     @Override
     protected void onDestroy() {
         runTimer.cancel();
+        sensorManager.unregisterListener(this);
         super.onDestroy();
     }
 

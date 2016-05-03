@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stepCntTxt"
+        android:text="已走步数："
+        android:textSize="40dp"
+        android:textColor="@color/black"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stepCntInput"
+        android:text="0"
+        android:textSize="40dp"
+        android:textColor="@color/blue"
+        android:layout_toRightOf="@+id/stepCntTxt"
+        android:layout_centerVertical="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stepCntTxt">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/startStepBtn"
+            android:text="开始计步"
+            android:textSize="30dp"
+            android:textColor="@color/btncolor"
+            android:background="@color/white"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/resetStepBtn"
+            android:text="重置步数"
+            android:textSize="30dp"
+            android:textColor="@color/btncolor"
+            android:background="@color/white"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
