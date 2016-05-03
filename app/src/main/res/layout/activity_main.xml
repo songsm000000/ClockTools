@@ -52,15 +52,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/temperatureBtn"
+            android:text="温度计"
+            android:textSize="30dp"
+            android:textColor="@color/btncolor"
             android:background="@color/white"
             android:layout_weight="1"/>
 
 
     </LinearLayout>
-
-
-
-
-
 
 </LinearLayout>

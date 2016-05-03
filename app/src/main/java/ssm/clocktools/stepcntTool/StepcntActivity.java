@@ -21,6 +21,7 @@ public class StepCntActivity extends AppCompatActivity implements View.OnClickLi
     private Button startStepBtn = null;
     private Button resetStepBtn = null;
     private TextView stepCntInput = null;
+    private TextView isStepCnt = null;
 
     private boolean startStep = false;
 
@@ -49,6 +50,7 @@ public class StepCntActivity extends AppCompatActivity implements View.OnClickLi
         startStepBtn = (Button) findViewById(R.id.startStepBtn);
         resetStepBtn = (Button) findViewById(R.id.resetStepBtn);
         stepCntInput = (TextView) findViewById(R.id.stepCntInput);
+        isStepCnt = (TextView) findViewById(R.id.isStepCnt);
 
         startStepBtn.setOnClickListener(this);
         resetStepBtn.setOnClickListener(this);
@@ -58,8 +60,10 @@ public class StepCntActivity extends AppCompatActivity implements View.OnClickLi
         startStep = stepCntSave.getStartStep("startStep");
         if (startStep) {
             startStepBtn.setText("停止计步");
+            isStepCnt.setText("计步中。。。");
         } else {
             startStepBtn.setText("开始计步");
+            isStepCnt.setText("未计步");
         }
 
         showstepCntHandler = new ShowStepCntHandler();
@@ -80,13 +84,16 @@ public class StepCntActivity extends AppCompatActivity implements View.OnClickLi
                     intent = new Intent(this, StepCntService.class);
                     startService(intent);
                     startStepBtn.setText("停止计步");
+                    isStepCnt.setText("计步中。。。");
                     startStep = true;
 
 
                 } else {
+
                     intent = new Intent(this, StepCntService.class);
                     stopService(intent);
                     startStepBtn.setText("开始计步");
+                    isStepCnt.setText("未计步");
                     startStep = false;
 
                 }

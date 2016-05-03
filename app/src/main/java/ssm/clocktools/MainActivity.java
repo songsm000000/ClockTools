@@ -9,12 +9,14 @@ import android.widget.Button;
 import ssm.clocktools.clockTool.ClockActivity;
 import ssm.clocktools.compassTool.CompassActivity;
 import ssm.clocktools.stepcntTool.StepCntActivity;
+import ssm.clocktools.temperatureTool.TemperatureActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button clockToolBtn = null;
     private Button compassToolBtn = null;
     private Button stepCntBtn = null;
+    private Button temperatureBtn = null;
 
     private Intent intent = null;
 
@@ -30,10 +32,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clockToolBtn = (Button) findViewById(R.id.clockToolBtn);
         compassToolBtn = (Button) findViewById(R.id.compassToolBtn);
         stepCntBtn = (Button) findViewById(R.id.stepCntBtn);
+        temperatureBtn = (Button) findViewById(R.id.temperatureBtn);
 
         clockToolBtn.setOnClickListener(this);
         compassToolBtn.setOnClickListener(this);
         stepCntBtn.setOnClickListener(this);
+        temperatureBtn.setOnClickListener(this);
 
     }
 
@@ -55,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.stepCntBtn:
                 intent = new Intent(this, StepCntActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.temperatureBtn:
+                intent = new Intent(this, TemperatureActivity.class);
                 startActivity(intent);
                 break;
 

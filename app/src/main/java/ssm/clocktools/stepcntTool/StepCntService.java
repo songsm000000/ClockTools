@@ -7,6 +7,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 
 public class StepCntService extends Service implements SensorEventListener{
@@ -15,9 +16,15 @@ public class StepCntService extends Service implements SensorEventListener{
     private SensorManager sensorManager = null;
 
     private StepCntSave stepCntSave = null;
-    private int stepCnt = 0;
 
-    private float lastAcc = 0;
+    private int stepCnt = 0;
+    private double curValue = 0;
+    private double maxValue = 0;
+    private long lstMillion = 0;
+    private double range = 12;
+    private long duration = 200;
+
+    private PowerManager.WakeLock wakeLock = null;
 
     @Nullable
     @Override
@@ -26,10 +33,20 @@ public class StepCntService extends Service implements SensorEventListener{
     }
 
     @Override
+    public void onCreate() {
+
+        PowerManager pm = (PowerManager) getSystemService(this.POWER_SERVICE);
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, this.getClass().getName());
+        wakeLock.acquire();
+        super.onCreate();
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         stepCntSave = new StepCntSave(this);
         stepCnt = Integer.parseInt(stepCntSave.getStepCnt("stepCnt"));
+        lstMillion = System.currentTimeMillis();
 
         new Thread() {
 
@@ -50,23 +67,44 @@ public class StepCntService extends Service implements SensorEventListener{
     @Override
     public void onDestroy() {
         sensorManager.unregisterListener(this);
+        wakeLock.release();
+        wakeLock = null;
         super.onDestroy();
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        if (Math.abs(lastAcc - event.values[1]) > 8) {
+        curValue = magnitude(event.values[0], event.values[1], event.values[2]);
 
-            lastAcc = event.values[1];
-            stepCnt = stepCnt + 1;
-            stepCntSave.setStepCnt("stepCnt", stepCnt+"");
+        if (System.currentTimeMillis() - lstMillion > duration) {
+
+            if (maxValue > range) {
+                stepCnt = stepCnt + 1;
+                stepCntSave.setStepCnt("stepCnt", stepCnt + "");
+            }
+
+            maxValue = 0;
+            lstMillion = System.currentTimeMillis();
+
+        } else {
+
+            if (curValue > maxValue) {
+                maxValue = curValue;
+            }
 
         }
+
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    private double magnitude(float x, float y, float z) {
+        double magnitude = 0;
+        magnitude = Math.sqrt(x * x + y * y + z * z);
+        return magnitude;
     }
 }
